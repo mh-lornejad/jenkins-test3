@@ -10,8 +10,13 @@ pipeline {
         }
         stage('Test') { 
             steps {
-            sh label: '', returnStatus: true, script: 'cppcheck . --xml --language=c++ --enable=all --inconclusive --debug --template=gcc  2> cppcheck-result.xml'
-                publishCppcheck allowNoReport: true, ignoreBlankFiles: true, pattern: '**/cppcheck-result.xml'
+                script {
+                    def cppFiles = sh(script: 'find . -name "*.cpp"', returnStdout: true).trim().split('\n')
+                    
+                    for (String cppFile : cppFiles) {
+                        sh "clang-tidy $cppFile --"
+                    }
+                }
             }
         }
         stage('Deploy') { 
