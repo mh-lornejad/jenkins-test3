@@ -11,7 +11,7 @@ pipeline {
         stage('Test') { 
             steps {
                 echo "Test"
-                sh "ls"
+                sh "cppcheck ."
             }
         }
         stage('Deploy') { 
