@@ -12,6 +12,8 @@ pipeline {
             steps {
                 echo "Test"
                 sh "cppcheck ."
+                sh "make all"
+                sh "cppcheck — enable=all — inconclusive — xml — xml-version=2 graph 2 > cppcheck.xml"
             }
         }
         stage('Deploy') { 
