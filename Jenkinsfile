@@ -4,7 +4,7 @@ pipeline {
         stage('Clone the repo') { 
             steps {
                 echo "Clone the repo"
-                sh "rm -fr jenkins-test2"
+                sh "rm -fr jenkins-test3"
                 git branch: 'main', credentialsId: 'test', url: 'https://github.com/mh-lornejad/jenkins-test3.git'
             }
         }
