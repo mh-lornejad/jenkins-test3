@@ -11,7 +11,7 @@ pipeline {
         stage('Test') { 
             steps {
                 echo "Test"
-                bat'cppcheck . --force — enable=all — inconclusive — xml — xml-version=2 . 2 > cppcheck.xml'
+                sh "cppcheck . --force — enable=all — inconclusive — xml — xml-version=2 . 2 > cppcheck.xml"
             }
         }
         stage('Deploy') { 
