@@ -10,8 +10,8 @@ pipeline {
         }
         stage('Test') { 
             steps {
-                echo "Test"
-                sh "cppcheck . --force — enable=all — inconclusive — xml — xml-version=2 . 2 > cppcheck.xml"
+            sh label: '', returnStatus: true, script: 'cppcheck . --xml --language=c++ --enable=all --inconclusive --debug --template=gcc  2> cppcheck-result.xml'
+                publishCppcheck allowNoReport: true, ignoreBlankFiles: true, pattern: '**/cppcheck-result.xml'
             }
         }
         stage('Deploy') { 
