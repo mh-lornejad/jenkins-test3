@@ -20,4 +20,10 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            // scanForIssues tool: cppCheck(pattern: 'cppcheck.xml')
+            publishCppcheck(pattern: 'cppcheck.xml')
+        }
+    }
 }
