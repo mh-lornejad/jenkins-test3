@@ -1,8 +1,8 @@
 #include <iostream>
 
 int main() {
-    int x;
-    std::cout << "The value of x is: " << x << std::endl; // Using uninitialized variable x
+    int* ptr = new int(5); // Memory allocated with new
+    // No delete statement for ptr
+
     return 0;
 }
-
