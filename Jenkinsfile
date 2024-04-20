@@ -11,7 +11,6 @@ pipeline {
         stage('Test') { 
             steps {
                 sh label: '', returnStatus: true, script: 'cppcheck . --xml --language=c++ --enable=all --inconclusive --debug --template=gcc  2> cppcheck-result.xml'
-                publishCppcheck allowNoReport: true, ignoreBlankFiles: true, pattern: '**/cppcheck-result.xml'
             }
         }
         stage('Deploy') { 
