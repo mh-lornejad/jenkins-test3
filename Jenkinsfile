@@ -8,10 +8,27 @@ pipeline {
                 git branch: 'main', credentialsId: 'test', url: 'https://github.com/mh-lornejad/jenkins-test3.git'
             }
         }
-        stage('Test') { 
+        stage('Test') {
             steps {
-                sh label: '', returnStatus: true, script: 'cppcheck . --xml --language=c++ --enable=all --inconclusive --debug --template=gcc  2> cppcheck-result.xml'
-            }
+            // Run cppcheck and capture its output in XML format
+                script {
+                    sh 'cppcheck . --xml --language=c++ --enable=all --inconclusive --debug --template=gcc 2> cppcheck-result.xml'
+                }
+            
+            // Parse cppcheck output and fail the build if errors are found
+                script {
+                    def cppcheckOutput = readFile('cppcheck-result.xml')
+                    
+                    // Check if cppcheck found any errors
+                    if (cppcheckOutput.contains('<error ')) {
+                        // Print cppcheck output for debugging
+                        echo "cppcheck found errors:"
+                        echo cppcheckOutput
+                        
+                        // Fail the Jenkins build
+                        error('cppcheck found errors')
+                    }
+                }
         }
         stage('Deploy') { 
             steps {
