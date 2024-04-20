@@ -1,0 +1,6 @@
+<configuration>
+    <rule id="my_custom_rule" enabled="true">
+        <pattern>Uninitialized variable '.*'</pattern>
+        <message>Variable '$1' is not initialized.</message>
+    </rule>
+</configuration>
