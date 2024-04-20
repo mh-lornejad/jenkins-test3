@@ -12,7 +12,7 @@ pipeline {
             steps {
             // Run cppcheck and capture its output in XML format
                 script {
-                    sh 'cppcheck . --enable=all --suppress=missingIncludeSystem --xml --language=c++ --enable=all --inconclusive --debug --template=gcc 2> cppcheck-result.xml'
+                    sh 'cppcheck . --enable=all --suppress=missingIncludeSystem --xml --language=c++  -i cppcheck.xml --enable=all --inconclusive --debug --template=gcc 2> cppcheck-result.xml'
                 }
             
             // Parse cppcheck output and fail the build if errors are found
