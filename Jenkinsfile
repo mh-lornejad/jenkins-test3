@@ -29,6 +29,7 @@ pipeline {
                         error('cppcheck found errors')
                     }
                 }
+            }    
         }
         stage('Deploy') { 
             steps {
