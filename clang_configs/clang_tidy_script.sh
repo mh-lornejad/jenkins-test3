@@ -15,3 +15,4 @@ for file in $files; do
         exit 1
     fi
 done
+echo "clang-tidy done successful for all files."
