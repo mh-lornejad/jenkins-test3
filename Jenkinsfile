@@ -8,21 +8,21 @@ pipeline {
                 git branch: 'main', credentialsId: 'test', url: 'https://github.com/mh-lornejad/jenkins-test3.git'
             }
         }
-        stage('Test') {
+        stage('Code Analysis') {
             parallel {
-                stage('Cpp-Check') {
+                stage('CppCheck') {
                     steps {
                         sleep 3
                         sh 'cppcheck_configs/cpp_check_scripts.sh'
                     }
                 }
-                stage('Clang-Tidy') {
+                stage('Clang Tidy') {
                     steps {
                         sh 'clang_configs/clang_tidy_script.sh'
                     }
                 }
 
-                stage('Clang-Format') {
+                stage('Clang Format') {
                     steps {
                         sh 'clang_configs/clang_format_script.sh'
                     }
