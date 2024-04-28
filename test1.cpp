@@ -1,8 +1,9 @@
-#include <iostream>
+#include <stdio.h>
 
 int main() {
-    int* ptr = new int(5); // Memory allocated with new
-    // No delete statement for ptr
-
+    int a = 5;
+    int b = 10;
+    int sum = a + b;
+    printf("Sum: %d\n", sum);
     return 0;
 }
