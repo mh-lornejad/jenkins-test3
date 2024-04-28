@@ -39,7 +39,7 @@ pipeline {
                             def files = sh(script: 'find . -name "*.cpp"', returnStdout: true).trim().split('\n')
                             for (def file in files) {
                                 echo "Running clang-tidy for file: $file"
-                                def clangTidyOutput = sh(script: "clang-tidy $file -- -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -L /usr/lib/gcc/x86_64-linux-gnu/11  -DMY_DEFINES ...", returnStdout: true).trim()
+                                def clangTidyOutput = sh(script: "clang-tidy $file -- -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -DMY_DEFINES ...", returnStdout: true).trim()
                                 if (clangTidyOutput.contains('warning:')) {
                                     echo "clang-tidy found warnings in file: $file"
                                     echo clangTidyOutput
