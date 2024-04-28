@@ -12,6 +12,7 @@ pipeline {
             parallel {
                 stage('Cppcheck') {
                     steps {
+                        sleep 10
                         // Run cppcheck and capture its output in XML format
                         sh 'cppcheck . --enable=all --suppress=missingIncludeSystem --xml --language=c++  -i cppcheck.xml --enable=all --inconclusive --debug --template=gcc 2> cppcheck-result.xml'
                         
@@ -33,12 +34,14 @@ pipeline {
                 }
                 stage('Other Tests') {
                     steps {
+                        sleep 10
                         // Add other tests here
                         echo "Running other tests..."
                     }
                 }
                 stage('Another Test') {
                     steps {
+                        sleep 10
                         // Add another test here
                         echo "Running another test..."
                     }
@@ -47,6 +50,7 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
+                sleep 10
                 echo "Deploy"
             }
         }
