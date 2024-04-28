@@ -12,20 +12,18 @@ pipeline {
             parallel {
                 stage('Cpp-Check') {
                     steps {
-                        sleep 10
+                        sleep 3
                         sh 'cppcheck_configs/cpp_check_scripts.sh'
                     }
                 }
                 stage('Clang-Tidy') {
                     steps {
-                        sleep 10
                         sh 'clang_configs/clang_tidy_script.sh'
                     }
                 }
 
                 stage('Clang-Format') {
                     steps {
-                        sleep 10
                         sh 'clang_configs/clang_format_script.sh'
                     }
                 }
