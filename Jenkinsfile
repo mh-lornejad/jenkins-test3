@@ -35,5 +35,10 @@ pipeline {
                 echo "Deploy"
             }
         }
+        stage('Cleaning') {
+            steps {
+                sh "rm -fr jenkins-test3"
+            }
+        }
     }
 }
