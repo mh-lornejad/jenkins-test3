@@ -10,53 +10,23 @@ pipeline {
         }
         stage('Test') {
             parallel {
-                stage('Cppcheck') {
+                stage('Cpp-Check') {
                     steps {
                         sleep 10
-                        // Run cppcheck and capture its output in XML format
-                        sh 'cppcheck . --enable=all --suppress=missingIncludeSystem --xml --language=c++  -i cppcheck.xml --enable=all --inconclusive --debug --template=gcc 2> cppcheck-result.xml'
-                        
-                        // Parse cppcheck output and fail the build if errors are found
-                        script {
-                            def cppcheckOutput = readFile('cppcheck-result.xml')
-                            
-                            // Check if cppcheck found any errors
-                            if (cppcheckOutput.contains('<error ')) {
-                                // Print cppcheck output for debugging
-                                echo "cppcheck found errors:"
-                                echo cppcheckOutput
-                                
-                                // Fail the Jenkins build
-                                error('cppcheck found errors')
-                            }
-                        }
+                        sh 'cppcheck_configs/cpp_check_scripts.sh'
                     }
                 }
                 stage('Clang-Tidy') {
                     steps {
-                        // Find all C++ files in the project directory and its subdirectories
-                        script {
-                            def files = sh(script: 'find . -name "*.cpp"', returnStdout: true).trim().split('\n')
-                            for (def file in files) {
-                                echo "Running clang-tidy for file: $file"
-                                def clangTidyOutput = sh(script: "clang-tidy $file -- -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -DMY_DEFINES ...", returnStdout: true).trim()
-                                echo clangTidyOutput
-                                if (clangTidyOutput.contains('warning:')) {
-                                    echo "clang-tidy found warnings in file: $file"
-                                    echo clangTidyOutput
-                                    error('clang-tidy found warnings')
-                                }
-                            }
-                        }
+                        sleep 10
+                        sh 'clang_configs/clang_tidy_script.sh'
                     }
                 }
 
-
-                stage('Another Test') {
+                stage('Clang-Format') {
                     steps {
                         sleep 10
-                        // Add another test here
-                        echo "Running another test..."
+                        sh 'clang_configs/clang_format_script.sh'
                     }
                 }
             }
