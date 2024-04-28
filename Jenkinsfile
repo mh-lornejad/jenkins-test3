@@ -28,12 +28,6 @@ pipeline {
                     }
                 }
             }
-            post {
-                failure {
-                    echo 'Code Analysis failed'
-                    currentBuild.result = 'FAILURE'
-                }
-            }
         }
         stage('Deploy') { 
             steps {
