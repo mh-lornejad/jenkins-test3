@@ -32,13 +32,20 @@ pipeline {
                         }
                     }
                 }
-                stage('Other Tests') {
+                stage('Clang-Tidy') {
                     steps {
-                        sleep 10
-                        // Add other tests here
-                        echo "Running other tests..."
+                        // Run clang-tidy on all C++ files in the project directory and its subdirectories
+                        script {
+                            def clangTidyOutput = sh(script: 'find . -name "*.cpp" -print0 | xargs -0 -I {} clang-tidy {} -- -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -L /usr/lib/gcc/x86_64-linux-gnu/11  -DMY_DEFINES ...', returnStdout: true).trim()
+                            if (clangTidyOutput.contains('warning:')) {
+                                echo "clang-tidy found warnings:"
+                                echo clangTidyOutput
+                                error('clang-tidy found warnings')
+                            }
+                        }
                     }
                 }
+
                 stage('Another Test') {
                     steps {
                         sleep 10
